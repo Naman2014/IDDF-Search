@@ -1,0 +1,44 @@
+graph = {
+    'A':['B','C'],
+    'B':['D','E'],
+    'C':['G','H'],
+    'D':[ ],
+    'E':['K','F'],
+    'G':[ ],
+    'H':['I','J'],
+    'K':[ ],
+    'F':['I'],
+    'I':['F'],
+    'J':[ ]
+}
+
+path = list()
+
+def DFS(currentNode,goalNode,graph,maxDepth,curList):
+    print(currentNode)
+    curList.append(currentNode)
+    
+    if currentNode==goalNode:
+        return True
+    if maxDepth<=0:
+        path.append(curList)
+        return False
+    for node in graph[currentNode]:
+        if DFS(node,goalNode,graph,maxDepth-1,curList):
+            return True
+        else:
+            curList.pop()
+    return False
+    
+def iterativeDDFS(currentNode,goalNode,graph,maxDepth):
+    for i in range(maxDepth):
+        curList = list()
+        if DFS(currentNode,goalNode,graph,i,curList):
+            return True
+    return False
+    
+if not iterativeDDFS('A','F',graph,5):
+    print("Path is not available")
+else:
+    print("Path exists")
+    print(path.pop())
